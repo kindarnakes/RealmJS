@@ -1,19 +1,19 @@
 let realm = require("realm");
 let clienteModel =  require('./cliente');
 
-
-realm.open({schema: [clienteModel.ClienteSchema, FacturaSchema]})
-
 const FacturaSchema = {
     name: 'Factura',
     primaryKey: 'id',
-    propierties:{
+    properties:{
         id: 'string',
         importe: {type: 'float', default: 0.0},
         fecha: 'date',
         cliente: {type: 'linkingObjects', objectType: 'Cliente', property: 'facturas'}
     }
 };
+
+realm.open({schema: [clienteModel.ClienteSchema, FacturaSchema]})
+
 
 
 
