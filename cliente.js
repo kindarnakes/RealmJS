@@ -1,9 +1,11 @@
 let realm = require("realm");
 let facturaModel =  require('./factura');
 
+realm.open({schema: [ClienteSchema, facturaModel.FacturaSchema]})
 
 const ClienteSchema = {
     name: 'Cliente',
+    primaryKey: 'dni',
     propierties:{
         nombre: 'string',
         dni: 'string',
@@ -39,5 +41,6 @@ module.exports = {
     updateCliente,
     getCliente,
     getClientes,
-    removeCliente
+    removeCliente,
+    ClienteSchema
 }
