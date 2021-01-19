@@ -14,7 +14,7 @@ let router=express.Router();
 
 
 router.get('/clientes', clientes.getClientes);
-router.get('/cliente/:id', clientes.removeCliente);
+router.get('/cliente/:id', clientes.getCliente);
 router.post('/cliente', clientes.createCliente);
 router.put('/cliente/:id', clientes.updateCliente);
 router.delete('/cliente/:id', clientes.removeCliente);

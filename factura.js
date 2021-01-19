@@ -7,12 +7,11 @@ const FacturaSchema = {
     properties:{
         id: 'string',
         importe: {type: 'float', default: 0.0},
-        fecha: 'date',
-        cliente: {type: 'linkingObjects', objectType: 'Cliente', property: 'facturas'}
+        fecha: 'date'
     }
 };
 
-realm.open({schema: [clienteModel.ClienteSchema, FacturaSchema]})
+//realm.open({schema: [clienteModel.ClienteSchema, FacturaSchema]})
 
 
 
@@ -21,7 +20,7 @@ const createFactura = (request, response) =>{
     let name = '';
     let id='';
     let importe='';
-    let fecha='';
+    let fecha;
     let cliente;
     if (request.body) {
         name = request.body.name;
@@ -30,7 +29,7 @@ const createFactura = (request, response) =>{
         fecha = request.body.fecha;
         cliente=request.body.cliente;
 
-        realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
+        //realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
     
         if (error) {
             console.log(error);
@@ -54,7 +53,7 @@ const updateFactura = (request, response) =>{
         fecha = request.body.fecha;
         cliente=request.body.cliente;
 
-        realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
+        //realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
     
         if (error) {
             console.log(error);
@@ -77,12 +76,11 @@ const getFacturas = (request, response) =>{
     } catch (error) {
         
     }
-    
-    
    
-    
 
 }
+
+
 const getFactura = (request, response) =>{
     try {
         let factura = realm.objects('Factura');
