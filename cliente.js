@@ -71,11 +71,6 @@ const getClientes = (request, response) => {
       let clientes = realm.objects('Cliente');
 
       if (clientes) {
-        clientes.forEach(cliente =>{
-          cliente.facturas.forEach(factura =>{
-            factura.cliente = null;
-          })
-        })
         response.status(200).json(clientes);
       } else {
         response.status(403).json('No hay clientes');
