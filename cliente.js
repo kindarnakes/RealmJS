@@ -71,7 +71,7 @@ const getClientes = (request, response) => {
       let clientes = realm.objects('Cliente');
 
       if (clientes) {
-        let cache = []; 
+        //let cache = []; 
         response.status(200).json(clientes);
         /*let message = JSON.stringify(clientes, (key, value) => {
           if (typeof value === 'object' && value !== null) {
