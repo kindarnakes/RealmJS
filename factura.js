@@ -68,6 +68,7 @@ const updateFactura = (request, response) =>{
 const getFacturas = (request, response) =>{
     
     try {
+        realm.open({ schema: [FacturaSchema, clienteModel.ClienteSchema] }).then(realm => {
         let factura = realm.objects('Factura');
         
         if(factura){
@@ -75,7 +76,10 @@ const getFacturas = (request, response) =>{
           }else{
             console.log('No hay facturas');
         }
-    } catch (error) {
+    })
+} catch (error) {
+    response.status(403).json('No hay facturas');
+        console.log('No hay facturas');
         
     }
    
@@ -85,16 +89,20 @@ const getFacturas = (request, response) =>{
 
 const getFactura = (request, response) =>{
     try {
+        realm.open({ schema: [FacturaSchema, clienteModel.ClienteSchema] }).then(realm => {
         let factura = realm.objects('Factura');
-        let idFactura = factura.filtered('id = "id"');
+        let idFactura = factura.filtered('id = $0', request.params.id);
         
-        if(factura){
-            response.status(200).json(idfactura);
+        if(idFactura){
+            response.status(200).json(idFactura);
           }else{
             response.status(403).json("No existe esa factura con ese ID");
             return;
         }
-    } catch (error) {
+    })
+} catch (error) {
+    response.status(403).json('No hay facturas');
+        console.log('No hay facturas');
         
     }
 
