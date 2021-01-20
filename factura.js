@@ -23,47 +23,77 @@ const createFactura = (request, response) =>{
     let id='';
     let importe='';
     let fecha;
-    let cliente;
+    let cliente_dni='';
+    console.log(request.body);
     if (request.body) {
         name = request.body.name;
         id=request.body.id;
         importe = request.body.importe;
         fecha = request.body.fecha;
-        cliente=request.body.cliente;
-
-        //realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
-    
-        if (error) {
-            console.log(error);
-        } else {
-            //console.log(result);
-            response.status(200).json(result.rows[0].id);
+        cliente_dni=request.body.cliente_dni;
+       
+        try{
+        realm.open({ schema: [FacturaSchema, clienteModel.ClienteSchema] }).then(realm => {
+            try {
+            realm.write(() => {
+               
+                
+                realm.create('Factura', {
+              
+                    id: id, importe:importe, fecha:fecha, cliente_dni:cliente_dni 
+                  
+                  });
+                  response.status(200).json('done');
+            });
+        } catch (err) {
+            console.log(err);
+            response.status(409).json('Not done, key repeat');
+          }
+         });
+        }catch (e) {
+            response.status(409).json('Not done');
+            console.log("Error on creation");
         }
-    }
+        }
 }
 
 const updateFactura = (request, response) =>{
     let name = '';
     let id='';
     let importe='';
-    let fecha='';
-    let cliente;
+    let fecha;
+    let cliente_dni='';
+    console.log(request.body);
     if (request.body) {
         name = request.body.name;
         id=request.body.id;
         importe = request.body.importe;
         fecha = request.body.fecha;
-        cliente=request.body.cliente;
-
-        //realm.create(name, {id:this.id,importe:this.importe,fecha=this.fecha, cliente=this.cliente});
-    
-        if (error) {
-            console.log(error);
-        } else {
-            //console.log(result);
-            response.status(200).json(`Factura ${id} actualizada`);
+        cliente_dni=request.body.cliente_dni;
+       
+        try{
+        realm.open({ schema: [FacturaSchema, clienteModel.ClienteSchema] }).then(realm => {
+            try {
+            realm.write(() => {
+               
+                
+                realm.create('Factura', {
+              
+                    id: id, importe:importe, fecha:fecha, cliente_dni:cliente_dni 
+                  
+                  }, 'modified' );
+                  response.status(200).json('done');
+            });
+        } catch (err) {
+            console.log(err);
+            response.status(409).json('Not done, key repeat');
+          }
+         });
+        }catch (e) {
+            response.status(409).json('Not done');
+            console.log("Error on creation");
         }
-    }
+        }
 }
 const getFacturas = (request, response) =>{
     
