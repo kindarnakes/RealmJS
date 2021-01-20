@@ -71,7 +71,20 @@ const getClientes = (request, response) => {
       let clientes = realm.objects('Cliente');
 
       if (clientes) {
+        let cache = []; 
         response.status(200).json(clientes);
+        /*let message = JSON.stringify(clientes, (key, value) => {
+          if (typeof value === 'object' && value !== null) {
+            // Duplicate reference found, discard key
+            if (cache.includes(value)) return;
+        
+            // Store value in our collection
+            cache.push(value);
+          }
+          return value;
+        });
+        console.log(message);
+        response.end(JSON.parse(message));//devuelve como string*/
       } else {
         response.status(403).json('No hay clientes');
         console.log('No hay Clientes');
