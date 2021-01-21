@@ -1,25 +1,12 @@
 let realm = require("realm");
-let facturaModel = require('./factura');
-
-const ClienteSchema = {
-  name: 'Cliente',
-  primaryKey: 'dni',
-  properties: {
-    nombre: 'string',
-    dni: 'string',
-    telefono: { type: 'int', default: 0 },
-    facturas: 'Factura[]',
-    fecha_nacimiento: 'date?'
-  }
-};
-
+let model = require('./schemas');
 
 
 const createCliente = (request, response) => {
   if (request.body) {
     console.log(request.body);
     try {
-      realm.open({ schema: [ClienteSchema, facturaModel.FacturaSchema] }).then(realm => {
+      realm.open({ schema: [model.ClienteSchema, model.FacturaSchema] }).then(realm => {
         try {
           realm.write(() => {
             realm.create('Cliente', {
@@ -44,11 +31,11 @@ const updateCliente = (request, response) => {
   if (request.body) {
     console.log(request.body);
     try {
-      realm.open({ schema: [ClienteSchema, facturaModel.FacturaSchema] }).then(realm => {
+      realm.open({ schema: [model.ClienteSchema, model.FacturaSchema] }).then(realm => {
         try {
           realm.write(() => {
             realm.create('Cliente', {
-              nombre: request.body.nombre, dni: request.params.id, telefono: parseInt(request.body.telefono),
+              nombre: request.body.nombre, dni: request.body.dni, telefono: parseInt(request.body.telefono),
               facturas: request.body.facturas, fecha_nacimiento: request.body.fecha_nacimiento
             }, 'modified');
             response.status(200).json('done');
@@ -67,7 +54,7 @@ const updateCliente = (request, response) => {
 }
 const getClientes = (request, response) => {
   try {
-    realm.open({ schema: [ClienteSchema, facturaModel.FacturaSchema] }).then(realm => {
+    realm.open({ schema: [model.ClienteSchema, model.FacturaSchema] }).then(realm => {
       let clientes = realm.objects('Cliente');
 
       if (clientes) {
@@ -98,7 +85,7 @@ const getClientes = (request, response) => {
 }
 const getCliente = (request, response) => {
   try {
-    realm.open({ schema: [ClienteSchema, facturaModel.FacturaSchema] }).then(realm => {
+    realm.open({ schema: [model.ClienteSchema, model.FacturaSchema] }).then(realm => {
       console.log(request.params.id);
       let cliente = realm.objects('Cliente').filtered('dni = $0', request.params.id);
       if (cliente) {
@@ -118,7 +105,7 @@ const getCliente = (request, response) => {
 const removeCliente = (request, response) => {
 
   try {
-    realm.open({ schema: [ClienteSchema, facturaModel.FacturaSchema] }).then(realm => {
+    realm.open({ schema: [model.ClienteSchema, model.FacturaSchema] }).then(realm => {
       console.log(request.params.id);
       let cliente = realm.objects('Cliente').filtered('dni = $0', request.params.id);
       if (cliente) {
@@ -148,6 +135,5 @@ module.exports = {
   updateCliente,
   getCliente,
   getClientes,
-  removeCliente,
-  ClienteSchema
+  removeCliente
 }
