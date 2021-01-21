@@ -48,7 +48,7 @@ const updateCliente = (request, response) => {
         try {
           realm.write(() => {
             realm.create('Cliente', {
-              nombre: request.body.nombre, dni: request.body.dni, telefono: parseInt(request.body.telefono),
+              nombre: request.body.nombre, dni: request.params.id, telefono: parseInt(request.body.telefono),
               facturas: request.body.facturas, fecha_nacimiento: request.body.fecha_nacimiento
             }, 'modified');
             response.status(200).json('done');
@@ -71,7 +71,7 @@ const getClientes = (request, response) => {
       let clientes = realm.objects('Cliente');
 
       if (clientes) {
-        let cache = []; 
+        //let cache = []; 
         response.status(200).json(clientes);
         /*let message = JSON.stringify(clientes, (key, value) => {
           if (typeof value === 'object' && value !== null) {
