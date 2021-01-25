@@ -6,8 +6,8 @@ const FacturaSchema = {
         id: 'string',
         importe: {type: 'float', default: 0.0},
         fecha: 'date',
-        cliente_dni: 'string'
-        //cliente: {type: 'linkingObjects', objectType: 'Cliente', property: 'facturas'}
+        //cliente_dni: 'string'
+        cliente: {type: 'linkingObjects', objectType: 'Cliente', property: 'facturas'}
     }
 };
 
