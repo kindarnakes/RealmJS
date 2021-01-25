@@ -23,12 +23,14 @@ const createFactura = (request, response) => {
                         let factura = {
                             id: id, importe: importe, fecha: fecha, cliente: cliente[0]
                         }
-                        if (cliente) {
+                        if (cliente[0]) {
                             //realm.create('Factura', factura);
                             cliente[0].facturas.push(factura);
                             realm.create('Cliente', cliente[0], 'modified');
                             console.log(factura);
                             response.status(200).json('done');
+                        }else{
+                            response.status(403).json('Client no exists');
                         }
                     });
                 } catch (err) {
