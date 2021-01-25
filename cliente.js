@@ -147,6 +147,10 @@ const removeCliente = (request, response) => {
       if (cliente) {
         realm.write(() => {
           try {
+            for(let client of cliente){
+            for (let factura of client.facturas) {
+              realm.delete(factura);
+            }}
             realm.delete(cliente);
             response.status(200).json('removed');
           } catch (err) {
